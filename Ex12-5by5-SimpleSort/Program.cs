@@ -1,6 +1,8 @@
-﻿int size = 10, sizeAux = size, numbersAux;
+﻿int size = 10;
+int minorPosition, aux;
+
 int[] numbers = new int[size];
-bool ordered = false;
+int[] orderedNumbers = new int[size];
 
 for (int i = 0; i < size; i++)
 {
@@ -8,43 +10,42 @@ for (int i = 0; i < size; i++)
     numbers[i] = int.Parse(Console.ReadLine());
 }
 
-Console.WriteLine("\n\nOrdering");
+Console.WriteLine("\nCopying");
 
-for (int i = 1; i < size; i++)
+for (int i = 0; i < size; i++)
 {
-    if (i == 1)
-        ordered = true;
+    orderedNumbers[i] = numbers[i]; ;
+}
 
-    if (numbers[i] < numbers[i - 1])
+Console.WriteLine("\nOrdering");
+
+for (int i = 0; i < size; i++)
+{
+    minorPosition = i;
+
+    for (int j = i + 1; j < size; j++)
     {
-        numbersAux = numbers[i];
-        numbers[i] = numbers[i - 1];
-        numbers[i - 1] = numbersAux;
-        ordered = false;
+        if (orderedNumbers[j] < orderedNumbers[minorPosition])
+            minorPosition = j;
     }
 
-    for (int j = 0; j < size; j++)
-    {
-        Console.Write($"{numbers[j]} ");
-    }
-    Console.WriteLine();
-
-    if (i == size - 1 && !ordered)
-    {
-
-        i = 0;
-        size--;
-        Console.WriteLine("\n---------- The last is ordered ----------\n");
-    }
+    aux = orderedNumbers[i];
+    orderedNumbers[i] = orderedNumbers[minorPosition];
+    orderedNumbers[minorPosition] = aux;
 }
 
 Console.WriteLine("\n\nOrdered values");
-size = sizeAux;
+
+for (int i = 0; i < size; i++)
+{
+    Console.Write($"{orderedNumbers[i]} ");
+}
+
+Console.WriteLine("\n\nOriginal values");
 
 for (int i = 0; i < size; i++)
 {
     Console.Write($"{numbers[i]} ");
 }
-
-Console.Write("Press any key to continue...");
+Console.Write("\n\nPress any key to continue...");
 Console.WriteLine();
